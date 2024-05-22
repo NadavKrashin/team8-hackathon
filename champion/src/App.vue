@@ -1,5 +1,12 @@
 <template>
-  <v-app dir="rtl" style="background-image: url('champion_wallpaper.png')">
+  <v-app
+    dir="rtl"
+    style="
+      background-image: url('champion_wallpaper.png');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    "
+  >
     <div v-if="showSplash" class="splash-screen">
       <v-img
         src="/champion-logo.png"
@@ -22,7 +29,7 @@
         position="fixed"
         class="ma-5 bottom-0 right-0"
         color="primary"
-        :icon="isInStore ? 'mdi-home' : 'mdi-store'"
+        :icon="isInStore ? 'mdi-medal' : 'mdi-store'"
         min-height="70px"
         min-width="70px"
       ></v-btn>
@@ -49,7 +56,7 @@ export default {
     // Simulate some loading time
     setTimeout(() => {
       this.showSplash = false; // Hide splash screen after loading
-    }, 0); // Change the time according to your application's loading time
+    }, 2000); // Change the time according to your application's loading time
   },
   components: {
     Navbar,

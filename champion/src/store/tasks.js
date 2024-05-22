@@ -19,7 +19,8 @@ export const useTasksStore = defineStore("tasks", () => {
         },
         {
           id: 2,
-          title: "Sudoku",
+          title: "החידון היומי",
+          subtitle: "ענו על כל התשובות נכונות לקבלת הפרס!",
           trophies: 20,
           coins: 50,
         },
