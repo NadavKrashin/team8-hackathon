@@ -1,28 +1,38 @@
 <template>
-  <div id="app">
-    <section class="shop">
-      <div class="products">
-        <h2>!בחר את המתנה שלך</h2>
-        <v-card
-          v-for="product in products"
-          :key="product.id"
-          class="item-card d-flex flex-column justify-center align-center"
-          color="primary"
-        >
-          <v-card-title class="ma-2">
-            {{ product.name }}
-          </v-card-title>
-          <img :src="product.image" alt="" style="border-radius: 10%" />
-          <v-card-actions style="align-items: center" class="ma-2">
-            <button @click="addToCart()">
-              <v-icon class="ml-2 mb-2" color="white">mdi-hand-coin</v-icon>
-              {{ product.price }}
-            </button>
-          </v-card-actions>
-        </v-card>
-      </div>
-    </section>
-  </div>
+  <section class="shop">
+    <div class="products">
+      <h2>!בחר את המתנה שלך</h2>
+      <v-card
+        v-for="product in products"
+        :key="product.id"
+        class="item-card d-flex flex-column justify-center align-center"
+        color="primary"
+      >
+        <v-card-title class="ma-2">
+          {{ product.name }}
+        </v-card-title>
+        <img :src="product.image" alt="" style="border-radius: 10%" />
+        <v-card-actions style="align-items: center" class="ma-2">
+          <v-btn
+            dir="rtl"
+            disabled
+            v-if="!product.used && !canUserBuyIt(product.price)"
+          >
+            אין לך מספיק כסף!
+          </v-btn>
+          <button
+            v-else-if="!product.used && canUserBuyIt(product.price)"
+            @click="addToCart(product)"
+          >
+            <v-icon class="ml-2 mb-2" color="white">mdi-hand-coin</v-icon>
+            {{ product.price }}
+          </button>
+
+          <v-btn v-else disabled>ההטבה מומשה</v-btn>
+        </v-card-actions>
+      </v-card>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -31,7 +41,20 @@ import rebar from "../assets/rebar.png";
 import toysrus from "../assets/toysrus.png";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
+import { useUsersStore } from "../store/users";
+import { nextTick } from "vue";
+import { storeToRefs } from "pinia";
 export default {
+  setup() {
+    const usersStore = useUsersStore();
+    const { updateUser } = usersStore;
+    const { currentUser } = storeToRefs(usersStore);
+    // expose to template and other options API hooks
+    return {
+      updateUser,
+      currentUser,
+    };
+  },
   data() {
     return {
       products: [
@@ -39,31 +62,62 @@ export default {
           id: 1,
           name: "ארוחת ילדים חינם במקדונלד'ס",
           image: mcdonalds,
+          used: false,
           price: 150,
         },
         {
           id: 2,
-          name: "חצי מחיר על הפריט השני בטיוס אר אס",
+          name: "חצי מחיר על הפריט השני בטויס אר אס",
           image: toysrus,
+          used: false,
           price: 100,
         },
-        { id: 3, name: "הגדלה חינם בריבר", image: rebar, price: 80 },
+        {
+          id: 3,
+          name: "הגדלה חינם בריבר",
+          image: rebar,
+          price: 80,
+          used: false,
+        },
       ],
       cart: [],
     };
   },
+
   methods: {
-    addToCart() {
-      let randomNumber = "";
-      for (let i = 0; i < 9; i++) {
-        randomNumber += Math.floor(Math.random() * 10).toString();
+    canUserBuyIt(productPrice) {
+      return productPrice <= this.currentUser.coins;
+    },
+    async addToCart(product) {
+      console.log(product.price);
+      console.log(this.currentUser.coins);
+      if (!this.canUserBuyIt(product.price)) {
+        Swal.fire({
+          title: "אופסי...",
+          text: "נראה שאין לך מספיק כסף",
+          icon: "error",
+          confirmButtonText: "צא",
+        });
+      } else {
+        let randomNumber = "";
+        for (let i = 0; i < 9; i++) {
+          randomNumber += Math.floor(Math.random() * 10).toString();
+        }
+
+        Swal.fire({
+          title: "!תהנה מהמתנה",
+          text: "הקוד למתנה שלך הוא: " + randomNumber,
+          icon: "success",
+          confirmButtonText: "צא",
+        });
+
+        product.used = true;
+
+        this.updateUser({
+          ...this.currentUser,
+          coins: this.currentUser.coins - product.price,
+        });
       }
-      Swal.fire({
-        title: "!תהנה מהמתנה",
-        text: "הקוד למתנה שלך הוא: " + randomNumber,
-        icon: "success",
-        confirmButtonText: "צא",
-      });
     },
   },
 };
@@ -89,14 +143,6 @@ h1 {
   padding: 20px;
 }
 
-.products {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  margin: 20px;
-  text-align: center;
-}
-
 .item-card {
   border-radius: 10%;
   margin-bottom: 25px;
@@ -104,6 +150,10 @@ h1 {
   width: 100%;
   align-items: center;
   align-content: center !important;
+}
+
+.item-card:last-child {
+  margin-bottom: 10vh;
 }
 
 .products img {
