@@ -4,6 +4,9 @@ import db
 from Models import Profile
 from bson import ObjectId
 
+from random import randint
+from re import findall
+
 app = FastAPI()
 
 @app.post("/profiles/new_profile")
@@ -38,3 +41,11 @@ async def get_leaderboard(id: str):
             return str(list(leaderboard))        
     mongo_id = ObjectId(id)
     return str(list(leaderboard).append(db.profiles.find_one({"_id": mongo_id})))
+
+@app.get("/games/hayadata")
+async def get_hayadata():
+    with open('hayadata.txt', 'r') as file:
+        all_hayadata = file.read()
+        splitted_hayadatas = list(findall(r'\[.*?\]', all_hayadata))
+        random_index = randint(0, len(splitted_hayadatas) - 1)
+        return str(splitted_hayadatas[random_index][1:-1])
