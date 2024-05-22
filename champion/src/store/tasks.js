@@ -208,5 +208,17 @@ export const useTasksStore = defineStore("tasks", () => {
     levels.value.filter((level) => level.unlocked).map(({ id }) => id)
   );
 
-  return { levels, unlockedLevelsIds };
+  const getRewardByTaskId = (taskId) => {
+    const foundLevel = levels.value.filter(({ tasks }) => {
+      return tasks && tasks.findIndex(({ id }) => +taskId === id) !== -1;
+    })[0];
+
+    const { coins, trophies } = foundLevel.tasks.filter(
+      ({ id }) => id === +taskId
+    )[0];
+
+    return { coins, trophies };
+  };
+
+  return { levels, unlockedLevelsIds, getRewardByTaskId };
 });

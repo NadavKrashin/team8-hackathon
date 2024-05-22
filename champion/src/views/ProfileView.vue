@@ -2,7 +2,7 @@
   <v-container v-if="currentUser">
     <div class="profile-container h-50" v-if="!isEditing">
       <img
-        :src="`https://api.multiavatar.com/${Math.random(10)}.png`"
+        :src="`https://api.multiavatar.com/${currentUser.name}.png`"
         alt="Profile Picture"
         class="profile-pic"
       />
@@ -25,7 +25,7 @@
     <EditProfile
       v-else
       @save="saveProfile"
-      @cancel="() => (isEditing.value = false)"
+      @cancel="() => (isEditing = false)"
       :name="currentUser.name"
       :age="currentUser.age"
       :interests="currentUser.interests"

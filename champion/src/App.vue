@@ -34,11 +34,11 @@
       >
         <section dir="ltr" class="title d-flex flex-column mt-1">
           <section>
-            <span class="ml-1 mt-5">57</span>
+            <span class="ml-1 mt-5">{{ currentUser.trophies }}</span>
             <v-icon class="ml-2" color="secondary">mdi-trophy</v-icon>
           </section>
           <section>
-            <span>248</span>
+            <span>{{ currentUser.coins }}</span>
             <v-icon class="ml-2 mb-2" color="secondary">mdi-hand-coin</v-icon>
           </section>
         </section>
@@ -60,31 +60,25 @@
   </v-app>
 </template>
 
-<script>
+<script setup>
 import Navbar from "./components/Navbar/Navbar.vue";
+import { onMounted, ref, computed } from "vue";
+import { useRoute } from "vue-router";
+import { useUsersStore } from "./store/users";
+import { storeToRefs } from "pinia";
 
-export default {
-  name: "App",
-  data() {
-    return {
-      showSplash: true, // Initially show splash screen
-    };
-  },
-  computed: {
-    isInStore() {
-      return this.$route.fullPath === "/store";
-    },
-  },
-  mounted() {
-    // Simulate some loading time
-    setTimeout(() => {
-      this.showSplash = false; // Hide splash screen after loading
-    }, 0); // Change the time according to your application's loading time
-  },
-  components: {
-    Navbar,
-  },
-};
+const usersStore = useUsersStore();
+const { currentUser } = storeToRefs(usersStore);
+
+const showSplash = ref(true);
+const route = useRoute();
+const isInStore = computed(() => route.fullPath === "/store");
+onMounted(() => {
+  setTimeout(() => {
+    showSplash.value = false; // Hide splash screen after loading
+  }, 0); // Change the time according to your application's loading time
+});
+// Simulate some loading time
 </script>
 <style>
 .splash-screen {

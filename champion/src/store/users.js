@@ -6,9 +6,9 @@ export const useUsersStore = defineStore("users", () => {
     name: "יוחנן גורביץ",
     age: 10,
     interests: ["שחמט", "כדורסל", "כדורגל"],
-    points: 248,
+    coins: 248,
     trophies: 57,
-    completedTasksIds: [764],
+    completedTasksIds: [],
   });
 
   const updateUser = (newUser) => {

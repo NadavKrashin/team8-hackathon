@@ -42,7 +42,7 @@
               <v-card
                 @click="
                   !completedTasksIds.includes(task.id) &&
-                    enterTask(currentLevel.id, task.route, task?.query)
+                    enterTask(task.id, task.route, task?.query)
                 "
                 :class="`task-card ${
                   isTaskCompleted(task.id) ? 'completed-task' : ''

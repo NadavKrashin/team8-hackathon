@@ -19,8 +19,8 @@ const currentRouteId = computed(() => route.params.id);
 const router = useRouter();
 
 onMounted(() => {
-  if (!unlockedLevelsIds.value.includes(+currentRouteId.value)) {
-    router.push("/");
-  }
+  // if (!unlockedLevelsIds.value.includes(+currentRouteId.value)) {
+  //   router.push("/");
+  // }
 });
 </script>

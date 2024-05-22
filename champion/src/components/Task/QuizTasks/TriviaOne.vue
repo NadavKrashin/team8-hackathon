@@ -49,7 +49,31 @@
 </template>
 
 <script>
+import { ref } from "vue";
+import { useUsersStore } from "../../../store/users";
+import { useTasksStore } from "../../../store/tasks";
+import { useRoute } from "vue-router";
 export default {
+  setup() {
+    const route = useRoute();
+    const usersStore = useUsersStore();
+    const { getRewardByTaskId } = useTasksStore();
+    const { updateUser, currentUser } = usersStore;
+
+    const taskId = route.params.id;
+    const { coins: coinsToAdd, trophies: trophiesToAdd } =
+      getRewardByTaskId(taskId);
+
+    // expose to template and other options API hooks
+    return {
+      updateUser,
+      taskId,
+      coinsToAdd,
+      trophiesToAdd,
+      currentUser,
+      getRewardByTaskId,
+    };
+  },
   data() {
     return {
       questions: [
@@ -125,6 +149,15 @@ export default {
       this.score = 0;
     },
     handleWin() {
+      this.updateUser({
+        ...this.currentUser,
+        coins: this.currentUser.coins + this.coinsToAdd,
+        trophies: this.currentUser.trophies + this.trophiesToAdd,
+        completedTasksIds: [
+          ...this.currentUser.completedTasksIds,
+          +this.taskId,
+        ],
+      });
       this.$router.push("/");
     },
     loadQuestion() {
