@@ -4,5 +4,5 @@ export default defineConfig({
   server: {
     port: 8080
   },
-  plugins:[react()]
+  plugins:[react()],
 })
