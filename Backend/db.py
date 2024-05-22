@@ -1,6 +1,6 @@
 import gridfs
 from pymongo import MongoClient
-prod_url="mongodb://mongodb-service-champion.apps.cluster-4kbfb.4kbfb.sandbox1471.opentlc.com/"
+prod_url="mongodb://admin:password@172.30.8.167:27017/admin"
 client = MongoClient(prod_url)
 db = client['DB']
 profiles = db['profiles']
