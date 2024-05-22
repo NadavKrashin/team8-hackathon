@@ -15,9 +15,45 @@ async def new_profile(profile: Profile):
     db.new_profile(profile)
 
 @app.get("/profiles/{profile_id}")
-async def get_profile(profile_id: int):
-    print(profile_id)
-    return db.get_profile(profile_id)
+async def get_profile(profile_id: str):
+    mongo_id = ObjectId(profile_id)
+    return str(db.profiles.find_one({"_id": mongo_id}))
+
+@app.get("/profiles/name/{profile_id}")
+async def get_name(profile_id: str):
+    mongo_id = ObjectId(profile_id)
+    return str(db.profiles.find_one({"_id": mongo_id})["name"])
+
+@app.get("/profiles/age/{profile_id}")
+async def get_age(profile_id: str):
+    mongo_id = ObjectId(profile_id)
+    return str(db.profiles.find_one({"_id": mongo_id})["age"])
+    
+@app.get("/profiles/score/{profile_id}")
+async def get_score(profile_id: str):
+    mongo_id = ObjectId(profile_id)
+    return str(db.profiles.find_one({"_id": mongo_id})["score"])
+    
+@app.get("/profiles/hobbies/{profile_id}")
+async def get_hobbies(profile_id: str):
+    mongo_id = ObjectId(profile_id)
+    return str(db.profiles.find_one({"_id": mongo_id})["hobbies"])
+    
+@app.get("/profiles/trophies/{profile_id}")
+async def get_trophies(profile_id: str):
+    mongo_id = ObjectId(profile_id)
+    return str(db.profiles.find_one({"_id": mongo_id})["trophies"])
+    
+@app.get("/profiles/coins/{profile_id}")
+async def get_coins(profile_id: str):
+    mongo_id = ObjectId(profile_id)
+    return str(db.profiles.find_one({"_id": mongo_id})["coins"])
+    
+@app.get("/profiles/gameids/{profile_id}")
+async def get_gameids(profile_id: str):
+    mongo_id = ObjectId(profile_id)
+    return str(db.profiles.find_one({"_id": mongo_id})["gameids"])
+
 
 @app.get("/")
 async def read_root():
