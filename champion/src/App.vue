@@ -1,5 +1,12 @@
 <template>
-  <v-app dir="rtl" style="background-image: url('champion_wallpaper.png')">
+  <v-app
+    dir="rtl"
+    style="
+      background-image: url('champion_wallpaper.png');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    "
+  >
     <div v-if="showSplash" class="splash-screen">
       <v-img
         src="/champion-logo.png"
