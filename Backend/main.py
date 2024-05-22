@@ -17,6 +17,7 @@ async def get_profile(profile_id: int):
 
 @app.get("/")
 async def read_root():
+    db.insert_json()
     return {"Hello": "World"}
 
 @app.post("profiles/{profile_id}/uploadfile")

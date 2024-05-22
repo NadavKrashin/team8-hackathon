@@ -1,7 +1,7 @@
 import gridfs
 from pymongo import MongoClient
 #prod_url="mongodb://mongodb-service-champion.apps.cluster-4kbfb.4kbfb.sandbox1471.opentlc.com/"
-client = MongoClient('mongodb://admin:password@172.30.8.167:27017/admin')
+client = MongoClient("mongodb://localhost:27017")
 db = client['DB']
 profiles = db['profiles']
 fs = gridfs.GridFS(db)
@@ -25,7 +25,8 @@ def new_profile(profile):
 
 
 def get_profile(profile_id):
-    return profiles.find_one({"id": profile_id})
+    profile = profiles.find_one({"id": profile_id})
+    del profile['_id']
 
 
 def upload_image(image, filename, profile_id):
@@ -35,4 +36,6 @@ def upload_image(image, filename, profile_id):
 def getfile(filename):
     return fs.find_one({'filename': filename})
 
+def insert_json():
+    profiles.insert_one({"f": 1})
 
