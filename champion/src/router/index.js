@@ -5,6 +5,7 @@ import TaskView from "../views/TaskView.vue";
 import ProfileView from "../views/ProfileView.vue";
 import LeaderboardsView from "../views/LeaderboardsView.vue";
 import StoreView from "../views/StoreView.vue";
+import adminpictures from "../views/adminpictures.vue";
 import DishesUpload from "../components/Task/ImageTasks/DishesUpload.vue";
 
 const routes = [
@@ -39,6 +40,11 @@ const routes = [
     path: "/store",
     name: "Store",
     component: StoreView,
+  },
+  {
+    path: "/adminpictures",
+    name: "adminpictures",
+    component: adminpictures,
   },
 ];
 
