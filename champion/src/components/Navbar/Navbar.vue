@@ -13,7 +13,7 @@
         }}</v-icon>
       </v-btn>
     </div>
-    <span dir="rtl" class="title">ברוך הבא צ׳אמפ!</span>
+    <span dir="rtl" class="title">ברוכים הבאים צ׳אמפס!</span>
   </v-app-bar>
 </template>
 
@@ -24,7 +24,7 @@ export default {
     return {
       iconSize: 36,
       links: [
-        { name: "Home", icon: "mdi-view-list", iconColor: "secondary" },
+        { name: "Home", icon: "mdi-medal", iconColor: "secondary" },
         { name: "Leaderboards", icon: "mdi-trophy", iconColor: "secondary" },
         { name: "Profile", icon: "mdi-account", iconColor: "secondary" },
       ],

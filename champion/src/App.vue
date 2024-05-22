@@ -21,7 +21,7 @@
     <!-- Your main application content -->
     <div v-else>
       <Navbar />
-      <v-main style="height: 100%">
+      <v-main>
         <router-view />
       </v-main>
       <v-btn
@@ -29,7 +29,7 @@
         position="fixed"
         class="ma-5 bottom-0 right-0"
         color="primary"
-        :icon="isInStore ? 'mdi-home' : 'mdi-store'"
+        :icon="isInStore ? 'mdi-medal' : 'mdi-store'"
         min-height="70px"
         min-width="70px"
       ></v-btn>

@@ -1,19 +1,22 @@
 <template>
-  <v-container style="height: 100vh" class="h-100" d-flex align-center>
-    <div class="profile-container" v-if="!isEditing">
+  <v-container>
+    <div class="profile-container h-50" v-if="!isEditing">
       <img :src="profilePic" alt="Profile Picture" class="profile-pic" />
       <div class="name">{{ name }}</div>
       <div class="age">גיל: {{ age }}</div>
       <div class="interests">
-        <div class="interest mr-2" v-for="interest in interests" :key="interest">
+        <div
+          class="interest mr-2"
+          v-for="interest in interests"
+          :key="interest"
+        >
           {{ interest }}
         </div>
       </div>
-      <div class="btn-container">
-        <v-btn color="primary" class="btn" @click="editProfile"
-          >ערוך פרופיל</v-btn
-        >
-      </div>
+
+      <v-btn color="primary" width="100%" @click="editProfile"
+        >ערוך פרופיל</v-btn
+      >
     </div>
     <EditProfile
       v-else
@@ -40,7 +43,7 @@ export default {
       profilePic: defaultChildImg,
       name: "יוחנן גורביץ",
       age: 10,
-      interests: ["שחמט","כדורסל","כדורגל"],
+      interests: ["שחמט", "כדורסל", "כדורגל"],
       isEditing: false,
     };
   },
@@ -63,11 +66,13 @@ export default {
 
 <style scoped>
 .profile-container {
+  display: flex;
+  flex-direction: column;
   background-color: #fff;
   border-radius: 15px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 300px;
-  text-align: center;
+  align-items: center;
   padding: 20px;
   margin: 0 auto;
 }
@@ -98,13 +103,7 @@ export default {
   padding: 5px 10px;
   margin: 5px 0;
 }
-.btn-container {
-  display: flex;
-  justify-content: space-between;
-}
-.btn {
-  flex: 1;
-}
+
 .btn:hover {
   background-color: #e4fa1d;
 }
