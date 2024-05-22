@@ -17,7 +17,10 @@
             'w-100 h-100 d-flex justify-center align-center': true,
           }"
         >
-          <v-card-title color="primary" v-if="level.unlocked">{{ level.number }}</v-card-title>
+          <v-card-title color="primary" v-if="level.unlocked">{{
+            level.number
+          }}</v-card-title>
+
           <v-icon colir="primary" v-else> mdi-lock</v-icon>
         </v-card>
       </div>
@@ -25,7 +28,7 @@
 
     <v-dialog v-model="dialog" max-width="600px">
       <v-card>
-        <v-card-title class="headline rtl-text">{{
+        <v-card-title class="headline rtl-text text-center">{{
           currentLevel.title
         }}</v-card-title>
         <v-card-text>
@@ -37,15 +40,21 @@
               sm="6"
             >
               <v-card
-                @click="enterTask(task.id)"
+                @click="enterTask(task.id, task.route)"
                 class="task-card"
                 color="primary"
                 outlined
+                dir="rtl"
               >
                 <v-card-title class="rtl-text align-center">{{
                   task.title
                 }}</v-card-title>
-                <section class="d-flex flex-column">
+                <v-card-subtitle
+                  v-if="task.subtitle"
+                  class="rtl-text align-center"
+                  >{{ task.subtitle }}</v-card-subtitle
+                >
+                <section dir="ltr" class="d-flex flex-column">
                   <section>
                     <v-icon class="ml-2" color="secondary">mdi-trophy</v-icon>
                     <span class="ml-1 mt-5">{{ task.trophies }}</span>
@@ -73,225 +82,32 @@
   </v-container>
 </template>
 
-<script>
-export default {
-  name: "LevelsPage",
-  data() {
-    return {
-      dialog: false,
-      currentLevel: {},
-      levels: [
-        {
-          id: 1,
-          number: 1,
-          title: "שלב ראשון",
-          unlocked: true,
-          tasks: [
-            {
-              id: 1,
-              title: "Memory Match",
-              trophies: 7,
-              coins: 100,
-            },
-            {
-              id: 2,
-              title: "Sudoku",
-              trophies: 20,
-              coins: 50,
-            },
-          ],
-        },
-        {
-          id: 2,
-          number: 2,
-          title: "Level 2",
-          unlocked: false,
-          tasks: [
-            {
-              id: 3,
-              title: "Puzzle",
-              image: "https://via.placeholder.com/150",
-            },
-            { id: 4, title: "Quiz", image: "https://via.placeholder.com/150" },
-          ],
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-        {
-          id: 3,
-          number: 3,
-          unlocked: false,
-        },
-      ],
-    };
-  },
-  methods: {
-    openLevel(level) {
-      if (level.unlocked) {
-        this.currentLevel = level;
-        this.dialog = true;
-      } else {
-        alert("This level is locked.");
-      }
-    },
-    enterTask(taskId) {
-      this.$router.push({ name: "Task", params: { id: taskId } });
-      this.dialog = false;
-    },
-  },
+<script setup>
+import { ref } from "vue";
+import { useTasksStore } from "../store/tasks";
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
+const dialog = ref(false);
+const currentLevel = ref({});
+const tasksStore = useTasksStore();
+
+const { levels } = storeToRefs(tasksStore);
+const router = useRouter();
+const openLevel = (level) => {
+  if (level.unlocked) {
+    currentLevel.value = level;
+    dialog.value = true;
+  } else {
+    alert("This level is locked.");
+  }
+};
+
+const enterTask = (taskId, route) => {
+  router.push({
+    path: `/task/${taskId}/${route}`,
+    params: { id: taskId },
+  });
+  dialog.value = false;
 };
 </script>
 

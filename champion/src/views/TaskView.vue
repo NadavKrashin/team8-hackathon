@@ -1,27 +1,26 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col cols="12">
-        <h1>Task Details for Task ID: {{ taskId }}</h1>
-        <!-- Add your task logic and UI here -->
-      </v-col>
-    </v-row>
+    <router-view></router-view>
   </v-container>
 </template>
 
-<script>
-export default {
-  name: "TaskView",
-  props: {
-    id: {
-      type: Number,
-      required: true,
-    },
-  },
-  computed: {
-    taskId() {
-      return this.$route.params.id;
-    },
-  },
-};
+<script setup>
+import { computed, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useTasksStore } from "../store/tasks";
+import { storeToRefs } from "pinia";
+
+const tasksStore = useTasksStore();
+
+const { unlockedLevelsIds } = storeToRefs(tasksStore);
+const route = useRoute();
+const currentRouteId = computed(() => route.params.id);
+
+const router = useRouter();
+
+onMounted(() => {
+  if (!unlockedLevelsIds.value.includes(+currentRouteId.value)) {
+    router.push("/");
+  }
+});
 </script>

@@ -9,7 +9,7 @@ export default {
   name: "LeaderboardsView",
 };
 </script>
-
+w
 <style scoped>
 .rtl-text {
   text-align: right;

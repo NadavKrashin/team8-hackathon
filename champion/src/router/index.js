@@ -5,6 +5,7 @@ import TaskView from "../views/TaskView.vue";
 import ProfileView from "../views/ProfileView.vue";
 import LeaderboardsView from "../views/LeaderboardsView.vue";
 import StoreView from "../views/StoreView.vue";
+import DishesUpload from "../components/Task/ImageTasks/DishesUpload.vue";
 
 const routes = [
   {
@@ -12,7 +13,18 @@ const routes = [
     name: "Home",
     component: HomeView,
   },
-  { path: "/task/:id", name: "Task", component: TaskView },
+  {
+    path: "/task/:id",
+    name: "Task",
+    component: TaskView,
+    children: [
+      {
+        path: "dishes", // Nested route path
+        component: DishesUpload, // Nested route component
+      },
+      // Other child routes can be defined here
+    ],
+  },
   {
     path: "/profile",
     name: "Profile",

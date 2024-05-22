@@ -9,6 +9,7 @@ import * as directives from "vuetify/directives";
 import "@mdi/font/css/materialdesignicons.css"; // Ensure you are using css-loader
 
 import router from "./router";
+import { createPinia } from "pinia";
 
 const customTheme = {
   dark: false,
@@ -33,7 +34,10 @@ const vuetify = createVuetify({
   directives,
 });
 
+const pinia = createPinia();
+
 createApp(App)
   .use(router)
   .use(vuetify, { rtl: true, iconfont: "md" })
+  .use(pinia)
   .mount("#app");

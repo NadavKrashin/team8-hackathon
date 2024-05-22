@@ -57,6 +57,7 @@ export default {
 .title {
   position: absolute;
   right: 0;
+  font-size: 1.2rem;
   margin-right: 2vw;
 }
 </style>
