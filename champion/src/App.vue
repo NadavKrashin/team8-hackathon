@@ -56,7 +56,7 @@ export default {
     // Simulate some loading time
     setTimeout(() => {
       this.showSplash = false; // Hide splash screen after loading
-    }, 0); // Change the time according to your application's loading time
+    }, 2000); // Change the time according to your application's loading time
   },
   components: {
     Navbar,
