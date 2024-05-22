@@ -10,10 +10,11 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.9.0",
-    "pinia": "^2.1.7",
     "mdi-vue": "^3.0.13",
+    "pinia": "^2.1.7",
     "vue": "^3.4.21",
     "vue-router": "^4.3.2",
+    "vue-sweetalert2": "^5.0.10",
     "vuetify": "^3.6.7"
   },
   "devDependencies": {
