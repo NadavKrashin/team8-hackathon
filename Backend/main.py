@@ -28,3 +28,7 @@ async def create_upload_file(file: UploadFile, profile_id: int):
     new_file = open(file.filename, 'wb')
     new_file.write(db.getfile(file.filename).read())
     return {"filename": file.filename}
+
+@app.get("/leaderboard")
+async def get_leaderboard():
+    return str(list(db.profiles.find({}).sort("score", -1).limit(10)))
