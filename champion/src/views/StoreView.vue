@@ -3,50 +3,67 @@
     <section class="shop">
       <div class="products">
         <h2>!בחר את המתנה שלך</h2>
-        <div v-for="product in products" :key="product.id">
-          <img :src="product.image" alt="" />
-          <p>{{ product.name }}</p>
-          <button @click="addToCart(product.id)">
-            !מחיר: {{ product.price }} גביעים
-          </button>
-        </div>
-      </div>
-      <div class="cart" v-if="cart.length > 0">
-        <h2>Your Cart</h2>
-        <ul>
-          <li v-for="item in cart" :key="item.id">
-            {{ item.name }} (x{{ item.quantity }})
-          </li>
-        </ul>
+        <v-card
+          v-for="product in products"
+          :key="product.id"
+          class="item-card d-flex flex-column justify-center align-center"
+          color="primary"
+        >
+          <v-card-title class="ma-2">
+            {{ product.name }}
+          </v-card-title>
+          <img :src="product.image" alt="" style="border-radius: 10%" />
+          <v-card-actions style="align-items: center" class="ma-2">
+            <button @click="addToCart()">
+              <v-icon class="ml-2 mb-2" color="white">mdi-hand-coin</v-icon>
+              {{ product.price }}
+            </button>
+          </v-card-actions>
+        </v-card>
       </div>
     </section>
   </div>
 </template>
 
 <script>
-import TeddyBear from "../assets/teddybear.jpg";
-import ToyCar from "../assets/car.png";
-import BarbieDoll from "../assets/barbie_doll.jpg";
+import mcdonalds from "../assets/mcdonalds.jpg";
+import rebar from "../assets/rebar.png";
+import toysrus from "../assets/toysrus.png";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 export default {
   data() {
     return {
       products: [
-        { id: 1, name: "דובי חמוד", image: TeddyBear, price: 100 },
-        { id: 2, name: "מכונית צעצוע", image: ToyCar, price: 80 },
-        { id: 3, name: "בובת ברבי", image: BarbieDoll, price: 150 },
+        {
+          id: 1,
+          name: "ארוחת ילדים חינם במקדונלד'ס",
+          image: mcdonalds,
+          price: 150,
+        },
+        {
+          id: 2,
+          name: "חצי מחיר על הפריט השני בטיוס אר אס",
+          image: toysrus,
+          price: 100,
+        },
+        { id: 3, name: "הגדלה חינם בריבר", image: rebar, price: 80 },
       ],
       cart: [],
     };
   },
   methods: {
-    addToCart(productId) {
-      const existingItem = this.cart.find((item) => item.id === productId);
-      if (existingItem) {
-        existingItem.quantity++;
-      } else {
-        const product = this.products.find((p) => p.id === productId);
-        this.cart.push({ ...product, quantity: 1 });
+    addToCart() {
+      let randomNumber = "";
+      for (let i = 0; i < 9; i++) {
+        randomNumber += Math.floor(Math.random() * 10).toString();
       }
+      Swal.fire({
+        title: "!תהנה מהמתנה",
+        text: "הקוד למתנה שלך הוא: " + randomNumber,
+        icon: "success",
+        confirmButtonText: "צא",
+      });
     },
   },
 };
@@ -58,12 +75,6 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f0f8ff; /* Light blue background */
-}
-
-header {
-  background-color: #ffc107; /* Orange header */
-  padding: 20px;
-  text-align: center;
 }
 
 h1 {
@@ -86,6 +97,15 @@ h1 {
   text-align: center;
 }
 
+.item-card {
+  border-radius: 10%;
+  margin-bottom: 25px;
+  color: "primary";
+  width: 100%;
+  align-items: center;
+  align-content: center !important;
+}
+
 .products img {
   width: 150px;
   height: 150px;
@@ -104,7 +124,7 @@ h1 {
 }
 
 button {
-  background-color: #4caf50; /* Green button */
+  background-color: #fcc725; /* Green button */
   color: #fff;
   padding: 10px 20px;
   border: none;
