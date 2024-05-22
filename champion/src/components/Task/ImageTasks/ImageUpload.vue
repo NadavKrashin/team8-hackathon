@@ -9,6 +9,7 @@
           <v-col cols="12">
             <v-file-input
               label="בחרו את התמונה"
+              @change="onFileChange($event)"
               v-model="selectedImage"
               accept="image/*"
             ></v-file-input>
@@ -19,6 +20,13 @@
             <v-img v-if="selectedImage" :src="selectedImage"></v-img>
           </v-col>
         </v-row>
+
+        <section v-if="selectedImage" dir="rtl">
+          <v-btn class="ma-2" color="primary">
+            <v-icon icon="mdi-cloud-upload" start></v-icon>
+            יאללה לאישור!
+          </v-btn>
+        </section>
       </v-container>
     </generic-card>
   </div>
@@ -30,4 +38,19 @@ import { ref, defineProps } from "vue";
 
 const props = defineProps(["title"]);
 const selectedImage = ref(null);
+
+const createImage = (file) => {
+  const reader = new FileReader();
+
+  reader.onload = (e) => {
+    selectedImage.value = e.target.result;
+  };
+  reader.readAsDataURL(file);
+};
+
+const onFileChange = (e) => {
+  const files = e.target.files || e.dataTransfer.files;
+  if (!files.length) return;
+  createImage(files[0]);
+};
 </script>

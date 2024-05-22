@@ -25,7 +25,13 @@
         <router-view />
       </v-main>
 
-      <v-sheet position="fixed" class="pa-2 ma-2 bottom-0" color="primary" rounded :elevation="11">
+      <v-sheet
+        position="fixed"
+        class="pa-2 ma-2 bottom-0"
+        color="primary"
+        rounded
+        :elevation="11"
+      >
         <section dir="ltr" class="title d-flex flex-column mt-1">
           <section>
             <span class="ml-1 mt-5">57</span>
@@ -73,7 +79,7 @@ export default {
     // Simulate some loading time
     setTimeout(() => {
       this.showSplash = false; // Hide splash screen after loading
-    }, 2000); // Change the time according to your application's loading time
+    }, 0); // Change the time according to your application's loading time
   },
   components: {
     Navbar,
