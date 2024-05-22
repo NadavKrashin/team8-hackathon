@@ -21,7 +21,7 @@
     <!-- Your main application content -->
     <div v-else>
       <Navbar />
-      <v-main>
+      <v-main style="height: 100%">
         <router-view />
       </v-main>
       <v-btn
