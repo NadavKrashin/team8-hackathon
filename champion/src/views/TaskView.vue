@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "TaskPage",
+  name: "TaskView",
   props: {
     id: {
       type: Number,
