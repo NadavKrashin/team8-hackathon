@@ -2,6 +2,7 @@ from typing import Union
 from fastapi import FastAPI, UploadFile
 import db
 from Models import Profile
+from bson import ObjectId
 
 app = FastAPI()
 
@@ -30,5 +31,10 @@ async def create_upload_file(file: UploadFile, profile_id: int):
     return {"filename": file.filename}
 
 @app.get("/leaderboard")
-async def get_leaderboard():
-    return str(list(db.profiles.find({}).sort("score", -1).limit(10)))
+async def get_leaderboard(id: str):
+    leaderboard = db.profiles.find({}).sort("score", -1).limit(10)
+    for doc in leaderboard:
+        if doc["_id"] == id:
+            return str(list(leaderboard))        
+    mongo_id = ObjectId(id)
+    return str(list(leaderboard).append(db.profiles.find_one({"_id": mongo_id})))
