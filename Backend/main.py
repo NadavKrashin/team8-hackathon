@@ -66,11 +66,7 @@ async def get_all_images():
 @app.get("/leaderboard")
 
 async def get_leaderboard(id: int):
-    leaderboard = db.profiles.find({}).sort("trophies", -1).limit(10)
-    for doc in leaderboard:
-        if doc["id"] == id:
-            return str(list(leaderboard))
-    return str(list(leaderboard).append(db.profiles.find_one({"id": id})))
+    return db.get_top10()
 
 
 @app.get("/games/hayadata")
