@@ -30,6 +30,13 @@ def get_profile(profile_id):
     del profile['_id']
     return profile
 
+def get_top10():
+    top10 = []
+    for profile in profiles.find().sort("trophies", -1).limit(10):
+        del profile['_id']
+        top10 += profile
+    return top10
+
 
 def upload_image(image, filename, profile_id, game_id):
     fs.put(image, filename=filename, profile_id=profile_id, verified=0, game_id=game_id)
