@@ -33,5 +33,5 @@ jobs:
         OPENSHIFT_NAMESPACE: ${{ secrets.OPENSHIFT_NAMESPACE }}
       run: |
         oc project $OPENSHIFT_NAMESPACE
-        oc start-build front --wait
         oc start-build backend --wait
+        oc start-build front --wait
