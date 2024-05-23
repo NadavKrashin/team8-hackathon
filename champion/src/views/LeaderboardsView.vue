@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container>
+    <v-container v-if="leaderboard.length > 0">
       <v-row>
         <v-col
           cols="12"
@@ -18,7 +18,12 @@
                 />
               </v-avatar>
               <span>{{ player.name }}</span>
-              <span>{{ player.score }}</span>
+
+              <p>
+                <v-icon color="secondary">mdi-trophy</v-icon>
+
+                <span>{{ player.trophies }}</span>
+              </p>
             </v-card-text>
           </v-card>
         </v-col>
@@ -40,7 +45,7 @@
                 <v-list-item>
                   <v-list-item-title>{{ player.name }}</v-list-item-title>
                   <v-list-item-subtitle>{{
-                    player.score
+                    player.trophies
                   }}</v-list-item-subtitle>
                 </v-list-item>
               </v-list-item>
@@ -53,18 +58,20 @@
 </template>
 
 <script>
+import { getLeaderboard } from "../api/api";
 import GolgVicCup from "../assets/victory_cup.jpg";
 export default {
   data() {
     return {
-      leaderboard: [
-        { name: "אליס", score: 100 },
-        { name: "בוב", score: 90 },
-        { name: "נועם", score: 80 },
-        { name: "דנה", score: 770 },
-        { name: "אורי", score: 60 },
-        // Add more players as needed
-      ].sort((a, b) => b.score - a.score), // Sort leaderboard by score descending
+      leaderboard: [],
+      // leaderboard: [
+      //   { name: "אליס", score: 100 },
+      //   { name: "בוב", score: 90 },
+      //   { name: "נועם", score: 80 },
+      //   { name: "דנה", score: 770 },
+      //   { name: "אורי", score: 60 },
+      //   // Add more players as needed
+      // ].sort((a, b) => b.score - a.score), // Sort leaderboard by score descending
     };
   },
   methods: {
@@ -92,6 +99,9 @@ export default {
           return "";
       }
     },
+  },
+  async mounted() {
+    this.leaderboard = await getLeaderboard();
   },
 };
 </script>
@@ -129,6 +139,10 @@ export default {
 .v-card-text span {
   margin-top: 10px;
   font-weight: bold;
+}
+
+.v-list {
+  background-color: #f2de6d;
 }
 
 .v-list-item {

@@ -9,8 +9,8 @@
       <input id="age" v-model.number="editedAge" type="number" />
     </div>
     <div>
-      <label for="interests">תחומי עניין:</label>
-      <textarea id="interests" v-model="editedInterests"></textarea>
+      <label for="hobbies">תחומי עניין:</label>
+      <textarea id="hobbies" v-model="editedhobbies"></textarea>
     </div>
     <div class="btn-container">
       <v-btn class="btn" color="secondary" @click="$emit('cancel')"
@@ -24,23 +24,23 @@
 <script>
 export default {
   name: "EditProfile",
-  props: ["name", "age", "interests"],
+  props: ["name", "age", "hobbies"],
   data() {
     return {
       editedName: this.name,
       editedAge: this.age,
-      editedInterests: this.interests.join(", "),
+      editedhobbies: this.hobbies.join(", "),
     };
   },
   methods: {
     save() {
-      const interestsArray = this.editedInterests
+      const hobbiesArray = this.editedHobbies
         .split(",")
         .map((item) => item.trim());
       this.$emit("save", {
         name: this.editedName,
         age: this.editedAge,
-        interests: interestsArray,
+        hobbies: hobbiesArray,
       });
     },
   },

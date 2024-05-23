@@ -40,8 +40,13 @@
               sm="6"
             >
               <v-card
-                @click="enterTask(task.id, task.route)"
-                class="task-card"
+                @click="
+                  !gameids.includes(task.id) &&
+                    enterTask(task.id, task.route, task?.query)
+                "
+                :class="`task-card ${
+                  isTaskCompleted(task.id) ? 'completed-task' : ''
+                }`"
                 color="primary"
                 outlined
                 dir="rtl"
@@ -66,6 +71,13 @@
                     <span>{{ task.coins }}</span>
                   </section>
                 </section>
+                <v-icon
+                  v-if="isTaskCompleted(task.id)"
+                  class="mr-4 mb-2"
+                  style="position: absolute; bottom: 0"
+                  color="secondary"
+                  >mdi-check</v-icon
+                >
               </v-card>
             </v-col>
           </v-row>
@@ -87,10 +99,13 @@ import { ref } from "vue";
 import { useTasksStore } from "../store/tasks";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
+import { useUsersStore } from "../store/users";
 const dialog = ref(false);
 const currentLevel = ref({});
 const tasksStore = useTasksStore();
+const usersStore = useUsersStore();
 
+const { gameids } = storeToRefs(usersStore);
 const { levels } = storeToRefs(tasksStore);
 const router = useRouter();
 const openLevel = (level) => {
@@ -102,18 +117,18 @@ const openLevel = (level) => {
   }
 };
 
-const enterTask = (taskId, route) => {
+const isTaskCompleted = (taskId) => gameids.value.includes(taskId);
+
+const enterTask = (taskId, route, query) => {
   router.push({
     path: `/task/${taskId}/${route}`,
     params: { id: taskId },
+    query: { q: query },
   });
   dialog.value = false;
 };
 </script>
 
-<!-- :class="`level-container ${index % 2 == 0 ? 'left-' : 'right-'}${
-    Math.floor(Math.random() * 4) + 1
-  }`" -->
 <style scoped>
 .levels-row {
   flex-direction: column-reverse; /* Arrange levels from bottom to top */
@@ -132,19 +147,6 @@ const enterTask = (taskId, route) => {
 .level-container:first-child {
   margin-top: 5vh;
 }
-
-/* .left-1 {
-  left: 10%;
-}
-.left-2 {
-  left: 20%;
-}
-.left-3 {
-  left: 30%;
-}
-.left-4 {
-  left: 40%;
-} */
 
 .dotted-line {
   border-left: 2px dotted #fcc725;
@@ -170,6 +172,10 @@ const enterTask = (taskId, route) => {
 .level-locked {
   opacity: 0.5;
   pointer-events: none;
+}
+
+.completed-task {
+  opacity: 0.5;
 }
 
 .rtl-text {

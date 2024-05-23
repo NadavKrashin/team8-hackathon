@@ -1,13 +1,17 @@
 <template>
-  <v-container>
+  <v-container v-if="currentUser">
     <div class="profile-container h-50" v-if="!isEditing">
-      <img :src="profilePic" alt="Profile Picture" class="profile-pic" />
-      <div class="name">{{ name }}</div>
-      <div class="age">גיל: {{ age }}</div>
-      <div class="interests">
+      <img
+        :src="`https://api.multiavatar.com/${currentUser.name}.png`"
+        alt="Profile Picture"
+        class="profile-pic"
+      />
+      <div class="name">{{ currentUser.name }}</div>
+      <div class="age">גיל: {{ currentUser.age }}</div>
+      <div class="hobbies">
         <div
           class="interest mr-2"
-          v-for="interest in interests"
+          v-for="interest in currentUser.hobbies"
           :key="interest"
         >
           {{ interest }}
@@ -21,46 +25,34 @@
     <EditProfile
       v-else
       @save="saveProfile"
-      @cancel="isEditing = false"
-      :name="name"
-      :age="age"
-      :interests="interests"
+      @cancel="() => (isEditing = false)"
+      :name="currentUser.name"
+      :age="currentUser.age"
+      :hobbies="currentUser.hobbies"
     />
   </v-container>
 </template>
 
-<script>
+<script setup>
 import EditProfile from "./EditProfile.vue";
-import defaultChildImg from "../assets/default_child.jpg";
+import { useUsersStore } from "../store/users";
+import { ref } from "vue";
+import { storeToRefs } from "pinia";
+import { replaceUser } from "../api/api";
 
-export default {
-  name: "Profile",
-  components: {
-    EditProfile,
-  },
-  data() {
-    return {
-      profilePic: defaultChildImg,
-      name: "יוחנן גורביץ",
-      age: 10,
-      interests: ["שחמט", "כדורסל", "כדורגל"],
-      isEditing: false,
-    };
-  },
-  methods: {
-    editProfile() {
-      this.isEditing = true;
-    },
-    saveProfile(newProfile) {
-      this.name = newProfile.name;
-      this.age = newProfile.age;
-      this.interests = newProfile.interests;
-      this.isEditing = false;
-    },
-    settings() {
-      alert("הגדרות");
-    },
-  },
+const userStore = useUsersStore();
+
+const { updateUser } = userStore;
+const { currentUser } = storeToRefs(userStore);
+const isEditing = ref(false);
+
+const editProfile = () => {
+  isEditing.value = true;
+};
+const saveProfile = async (newProfile) => {
+  updateUser(newProfile);
+  await replaceUser(newProfile);
+  isEditing.value = false;
 };
 </script>
 
@@ -92,7 +84,7 @@ export default {
   color: #777;
   margin-bottom: 15px;
 }
-.interests {
+.hobbies {
   text-align: right;
   margin-bottom: 15px;
 }
