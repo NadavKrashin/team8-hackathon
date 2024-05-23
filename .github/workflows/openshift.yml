@@ -1,4 +1,4 @@
-name: Trigger OpenShift Build
+name: Trigger OpenShift Builds
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main  # Adjust as needed
 
 jobs:
-  trigger-build:
+  trigger-build-1:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,16 +26,38 @@ jobs:
         OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
         OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
       run: |
-        oc login $OPENSHIFT_SERVER --token=$OPENSHIFT_TOKEN --insecure-skip-tls-verify
+        oc login $OPENSHIFT_SERVER --token=$OPENSHIFT_TOKEN
 
-    - name: Trigger OpenShift Backend Build
+    - name: Trigger Build 1
       env:
         OPENSHIFT_NAMESPACE: ${{ secrets.OPENSHIFT_NAMESPACE }}
       run: |
         oc project $OPENSHIFT_NAMESPACE
         oc start-build backend --wait
 
-    - name: Trigger OpenShift Frontend Build
+  trigger-build-2:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install OpenShift CLI
+      run: |
+        curl -LO https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz
+        tar -xzf openshift-client-linux.tar.gz
+        chmod +x oc
+        sudo mv oc /usr/local/bin/
+        oc version
+
+    - name: Login to OpenShift
+      env:
+        OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
+        OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
+      run: |
+        oc login $OPENSHIFT_SERVER --token=$OPENSHIFT_TOKEN
+
+    - name: Trigger Build 2
       env:
         OPENSHIFT_NAMESPACE: ${{ secrets.OPENSHIFT_NAMESPACE }}
       run: |
