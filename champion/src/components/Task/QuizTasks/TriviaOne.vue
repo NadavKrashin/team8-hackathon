@@ -153,10 +153,7 @@ export default {
         ...this.currentUser,
         coins: this.currentUser.coins + this.coinsToAdd,
         trophies: this.currentUser.trophies + this.trophiesToAdd,
-        completedTasksIds: [
-          ...this.currentUser.completedTasksIds,
-          +this.taskId,
-        ],
+        gameids: [...this.currentUser.gameids, +this.taskId],
       });
       this.$router.push("/");
     },

@@ -2,24 +2,18 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
 export const useUsersStore = defineStore("users", () => {
-  const currentUser = ref({
-    name: "יוחנן גורביץ",
-    age: 10,
-    interests: ["שחמט", "כדורסל", "כדורגל"],
-    coins: 248,
-    trophies: 57,
-    completedTasksIds: [],
-  });
+  const currentUser = ref(null);
 
   const updateUser = (newUser) => {
+    console.log(newUser);
     currentUser.value = newUser;
   };
 
   const completeTask = (taskId) => {
-    currentUser.value.completedTasksIds.push(taskId);
+    currentUser.value.gameids.push(taskId);
   };
 
-  const completedTasksIds = computed(() => currentUser.value.completedTasksIds);
+  const gameids = computed(() => currentUser.value.gameids);
 
-  return { currentUser, updateUser, completedTasksIds };
+  return { currentUser, updateUser, gameids };
 });

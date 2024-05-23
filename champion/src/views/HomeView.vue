@@ -41,7 +41,7 @@
             >
               <v-card
                 @click="
-                  !completedTasksIds.includes(task.id) &&
+                  !gameids.includes(task.id) &&
                     enterTask(task.id, task.route, task?.query)
                 "
                 :class="`task-card ${
@@ -105,7 +105,7 @@ const currentLevel = ref({});
 const tasksStore = useTasksStore();
 const usersStore = useUsersStore();
 
-const { completedTasksIds } = storeToRefs(usersStore);
+const { gameids } = storeToRefs(usersStore);
 const { levels } = storeToRefs(tasksStore);
 const router = useRouter();
 const openLevel = (level) => {
@@ -117,7 +117,7 @@ const openLevel = (level) => {
   }
 };
 
-const isTaskCompleted = (taskId) => completedTasksIds.value.includes(taskId);
+const isTaskCompleted = (taskId) => gameids.value.includes(taskId);
 
 const enterTask = (taskId, route, query) => {
   router.push({

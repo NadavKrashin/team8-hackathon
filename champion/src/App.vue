@@ -7,7 +7,7 @@
       background-attachment: fixed;
     "
   >
-    <div v-if="showSplash" class="splash-screen">
+    <div v-if="showSplash || !currentUser" class="splash-screen">
       <v-img
         src="/champion-logo.png"
         width="25vw"
@@ -66,14 +66,19 @@ import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useUsersStore } from "./store/users";
 import { storeToRefs } from "pinia";
+import { getUser } from "./api/api";
 
 const usersStore = useUsersStore();
+const { updateUser } = usersStore;
 const { currentUser } = storeToRefs(usersStore);
 
 const showSplash = ref(true);
 const route = useRoute();
 const isInStore = computed(() => route.fullPath === "/store");
-onMounted(() => {
+onMounted(async () => {
+  const user = await getUser();
+  updateUser(user);
+
   setTimeout(() => {
     showSplash.value = false; // Hide splash screen after loading
   }, 0); // Change the time according to your application's loading time

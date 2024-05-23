@@ -8,10 +8,10 @@
       />
       <div class="name">{{ currentUser.name }}</div>
       <div class="age">גיל: {{ currentUser.age }}</div>
-      <div class="interests">
+      <div class="hobbies">
         <div
           class="interest mr-2"
-          v-for="interest in currentUser.interests"
+          v-for="interest in currentUser.hobbies"
           :key="interest"
         >
           {{ interest }}
@@ -28,7 +28,7 @@
       @cancel="() => (isEditing = false)"
       :name="currentUser.name"
       :age="currentUser.age"
-      :interests="currentUser.interests"
+      :hobbies="currentUser.hobbies"
     />
   </v-container>
 </template>
@@ -43,7 +43,6 @@ const userStore = useUsersStore();
 
 const { updateUser } = userStore;
 const { currentUser } = storeToRefs(userStore);
-
 const isEditing = ref(false);
 
 const editProfile = () => {
@@ -83,7 +82,7 @@ const saveProfile = (newProfile) => {
   color: #777;
   margin-bottom: 15px;
 }
-.interests {
+.hobbies {
   text-align: right;
   margin-bottom: 15px;
 }

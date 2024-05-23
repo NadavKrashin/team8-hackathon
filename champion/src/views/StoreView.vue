@@ -89,8 +89,6 @@ export default {
       return productPrice <= this.currentUser.coins;
     },
     async addToCart(product) {
-      console.log(product.price);
-      console.log(this.currentUser.coins);
       if (!this.canUserBuyIt(product.price)) {
         Swal.fire({
           title: "אופסי...",
