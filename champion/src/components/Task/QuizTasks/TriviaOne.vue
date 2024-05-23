@@ -46,7 +46,7 @@
     </section>
     <button v-if="win" @click="handleWin">יאללה לאתגר הבא</button>
     <section style="position: relative">
-      <v-img class="trophy" src="../../public/trophy.png"></v-img>
+      <v-img class="trophy" src="/trophy.png"></v-img>
       <p class="feedback" v-if="trophyText">{{ trophyText }}</p>
     </section>
   </div>
