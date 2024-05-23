@@ -208,6 +208,30 @@ export const useTasksStore = defineStore("tasks", () => {
     levels.value.filter((level) => level.unlocked).map(({ id }) => id)
   );
 
+  const unlockLevels = (finishedTaskIds) => {
+    for (
+      let levelIndex = 1;
+      levelIndex < levels.value.length - 1;
+      levelIndex++
+    ) {
+      let isLevelFinished = true;
+      const currentLevel = levels.value[levelIndex - 1];
+
+      if (!currentLevel.tasks) {
+        isLevelFinished = false;
+      } else {
+        currentLevel.tasks.forEach((task) => {
+          if (!finishedTaskIds.includes(task.id)) {
+            isLevelFinished = false;
+          }
+        });
+
+        levels.value[levelIndex] = isLevelFinished
+          ? { ...levels.value[levelIndex], unlocked: true }
+          : levels.value[levelIndex];
+      }
+    }
+  };
   const getRewardByTaskId = (taskId) => {
     const foundLevel = levels.value.filter(({ tasks }) => {
       return tasks && tasks.findIndex(({ id }) => +taskId === id) !== -1;
@@ -220,5 +244,5 @@ export const useTasksStore = defineStore("tasks", () => {
     return { coins, trophies };
   };
 
-  return { levels, unlockedLevelsIds, getRewardByTaskId };
+  return { levels, unlockedLevelsIds, getRewardByTaskId, unlockLevels };
 });

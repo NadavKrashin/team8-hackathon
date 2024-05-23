@@ -67,8 +67,10 @@ import { useRoute } from "vue-router";
 import { useUsersStore } from "./store/users";
 import { storeToRefs } from "pinia";
 import { getUser } from "./api/api";
+import { useTasksStore } from "./store/tasks";
 
 const usersStore = useUsersStore();
+const { unlockLevels } = useTasksStore();
 const { updateUser } = usersStore;
 const { currentUser } = storeToRefs(usersStore);
 
@@ -79,6 +81,7 @@ onMounted(async () => {
   const user = await getUser();
 
   updateUser(user);
+  unlockLevels(user.gameids)
 
   setTimeout(() => {
     showSplash.value = false; // Hide splash screen after loading

@@ -56,11 +56,12 @@
 import { ref } from "vue";
 import { useUsersStore } from "../../../store/users";
 import { useTasksStore } from "../../../store/tasks";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { replaceUser } from "../../../api/api";
 export default {
   setup() {
     const route = useRoute();
+    const router = useRouter();
     const usersStore = useUsersStore();
     const { getRewardByTaskId } = useTasksStore();
     const { updateUser, currentUser } = usersStore;
@@ -69,9 +70,13 @@ export default {
     const { coins: coinsToAdd, trophies: trophiesToAdd } =
       getRewardByTaskId(taskId);
 
+    const navigate = (path) => {
+      router.push(path);
+    };
     // expose to template and other options API hooks
     return {
       updateUser,
+      navigate,
       taskId,
       coinsToAdd,
       trophiesToAdd,
@@ -166,7 +171,7 @@ export default {
       this.updateUser(newUser);
 
       await replaceUser(newUser);
-      this.$router.push("/");
+      this.navigate("/");
     },
     loadQuestion() {
       if (this.questionIndex < this.questions.length) {
