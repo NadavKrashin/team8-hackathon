@@ -1,6 +1,17 @@
 <template>
   <v-container>
     <router-view></router-view>
+  <v-img
+            src='../../public/bubble.png'
+            aspect-ratio="1.78"
+            length="400"
+            width="200"
+            ></v-img>
+            <v-img
+              src='../../public/talking.gif'
+              aspect-ratio="1.78"
+              class="gif-image"
+            ></v-img>
   </v-container>
 </template>
 

@@ -13,6 +13,7 @@
         }}</v-icon>
       </v-btn>
     </div>
+
     <span dir="rtl" class="title">ברוכים הבאים צ׳אמפס!</span>
   </v-app-bar>
 </template>

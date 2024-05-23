@@ -6,7 +6,8 @@ import ProfileView from "../views/ProfileView.vue";
 import LeaderboardsView from "../views/LeaderboardsView.vue";
 import StoreView from "../views/StoreView.vue";
 import adminpictures from "../views/adminpictures.vue";
-import DishesUpload from "../components/Task/ImageTasks/DishesUpload.vue";
+import TriviaOne from "../components/Task/QuizTasks/TriviaOne.vue";
+import ImageUpload from "../components/Task/ImageTasks/ImageUpload.vue";
 
 const routes = [
   {
@@ -20,8 +21,13 @@ const routes = [
     component: TaskView,
     children: [
       {
-        path: "dishes", // Nested route path
-        component: DishesUpload, // Nested route component
+        path: "friends", // Nested route path
+        component: ImageUpload, // Nested route component
+        props: (route) => ({ title: route.query.q }),
+      },
+      {
+        path: "quiz", // Nested route path
+        component: TriviaOne, // Nested route component
       },
       // Other child routes can be defined here
     ],

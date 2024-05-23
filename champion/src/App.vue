@@ -24,15 +24,38 @@
       <v-main>
         <router-view />
       </v-main>
-      <v-btn
-        @click="() => $router.push(isInStore ? '/' : '/store')"
+
+      <v-sheet
         position="fixed"
-        class="ma-5 bottom-0 right-0"
+        class="pa-2 ma-2 bottom-0"
         color="primary"
-        :icon="isInStore ? 'mdi-medal' : 'mdi-store'"
-        min-height="70px"
-        min-width="70px"
-      ></v-btn>
+        rounded
+        :elevation="11"
+      >
+        <section dir="ltr" class="title d-flex flex-column mt-1">
+          <section>
+            <span class="ml-1 mt-5">57</span>
+            <v-icon class="ml-2" color="secondary">mdi-trophy</v-icon>
+          </section>
+          <section>
+            <span>248</span>
+            <v-icon class="ml-2 mb-2" color="secondary">mdi-hand-coin</v-icon>
+          </section>
+        </section>
+      </v-sheet>
+      <v-sheet
+        color="transparent"
+        position="fixed"
+        class="ma-2 bottom-0 right-0"
+      >
+        <v-btn
+          @click="() => $router.push(isInStore ? '/' : '/store')"
+          color="primary"
+          :icon="isInStore ? 'mdi-medal' : 'mdi-store'"
+          min-height="70px"
+          min-width="70px"
+        ></v-btn>
+      </v-sheet>
     </div>
   </v-app>
 </template>
@@ -56,7 +79,7 @@ export default {
     // Simulate some loading time
     setTimeout(() => {
       this.showSplash = false; // Hide splash screen after loading
-    }, 2000); // Change the time according to your application's loading time
+    }, 0); // Change the time according to your application's loading time
   },
   components: {
     Navbar,

@@ -131,6 +131,10 @@ export default {
   font-weight: bold;
 }
 
+.v-list {
+background-color: #f2de6d ;
+}
+
 .v-list-item {
   background-color: #f6e791; /* Light orange background for list items */
   margin-bottom: 10px;
