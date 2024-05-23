@@ -25,7 +25,7 @@
     </button>
 
     <button
-      v-if="feedback && questionIndex < questions.length - 1"
+      v-if="feedback && questionIndex < questions.length - 1 && gameStarted"
       @click="nextQuestion"
     >
       שאלה הבאה
@@ -45,6 +45,10 @@
       <button @click="startGame">התחל מחדש</button>
     </section>
     <button v-if="win" @click="handleWin">יאללה לאתגר הבא</button>
+    <section style="position: relative">
+      <v-img class="trophy" src="../../public/trophy.png"></v-img>
+      <p class="feedback" v-if="trophyText">{{ trophyText }}</p>
+    </section>
   </div>
 </template>
 
@@ -129,11 +133,13 @@ export default {
         // },
       ],
       questionIndex: 0,
+      gameStarted: false,
       currentQuestion: null,
       answers: [],
       totalAnswered: 1,
       score: 0,
       feedback: "",
+      trophyText: "בהצלחה!",
       win: false,
     };
   },
@@ -144,6 +150,7 @@ export default {
   },
   methods: {
     startGame() {
+      this.gameStarted = true;
       this.questionIndex = 0;
       this.loadQuestion();
       this.score = 0;
@@ -165,6 +172,8 @@ export default {
           this.currentQuestion.correct_answer,
         ];
         this.feedback = "";
+        this.trophyText = "בהצלחה!";
+
       } else {
         this.currentQuestion = null;
       }
@@ -173,12 +182,16 @@ export default {
       if (!this.feedback) {
         if (answer === this.currentQuestion.correct_answer) {
           this.feedback = "נכון!";
+          this.trophyText = "אלופים!";
           this.score += 1;
           if (this.score === this.questions.length) {
             this.feedback = "כל הכבוד! הצלחת את האתגר";
             this.win = true;
+            this.trophyText = "תותחים!";
           }
         } else {
+          this.trophyText = "באסה"
+
           this.feedback = `לא נכון. התשובה הנכונה היא ${this.currentQuestion.correct_answer}`;
         }
       }
@@ -239,5 +252,13 @@ button {
 p {
   font-size: 1.2em;
   font-weight: bold;
+}
+.trophy {
+  position: relative;
+}
+.feedback {
+  position: absolute;
+  top: 50px;
+  left: 80px;
 }
 </style>
