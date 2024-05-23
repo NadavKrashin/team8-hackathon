@@ -1,18 +1,15 @@
 <template>
   <v-app-bar app color="primary">
-    <div>
-      <v-btn
-        v-for="link in links"
-        :key="link.name"
-        icon
-        :class="{ 'active-icon': isActive(link.name) }"
-        @click="navigateTo(link.name)"
-      >
-        <v-icon :color="link.iconColor" :size="iconSize">{{
-          link.icon
-        }}</v-icon>
-      </v-btn>
-    </div>
+    <v-btn
+      v-for="link in links"
+      :key="link.name"
+      icon
+      class="mb-3"
+      :class="{ 'active-icon': isActive(link.name) }"
+      @click="navigateTo(link.name)"
+    >
+      <v-icon :color="link.iconColor" :size="iconSize">{{ link.icon }}</v-icon>
+    </v-btn>
 
     <span dir="rtl" class="title">ברוכים הבאים צ׳אמפס!</span>
   </v-app-bar>

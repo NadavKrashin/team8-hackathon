@@ -5,9 +5,9 @@ import TaskView from "../views/TaskView.vue";
 import ProfileView from "../views/ProfileView.vue";
 import LeaderboardsView from "../views/LeaderboardsView.vue";
 import StoreView from "../views/StoreView.vue";
-import Fre from "../components/Task/ImageTasks/DishesUpload.vue";
 import TriviaOne from "../components/Task/QuizTasks/TriviaOne.vue";
 import ImageUpload from "../components/Task/ImageTasks/ImageUpload.vue";
+import adminpictures from "../views/adminpictures.vue";
 
 const routes = [
   {
@@ -46,6 +46,11 @@ const routes = [
     path: "/store",
     name: "Store",
     component: StoreView,
+  },
+  {
+    path: "/admin",
+    name: "adminpictures",
+    component: adminpictures,
   },
 ];
 

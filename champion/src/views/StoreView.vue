@@ -1,7 +1,7 @@
 <template>
   <section class="shop">
     <div class="products">
-      <h2>!בחר את המתנה שלך</h2>
+      <h2>!בחרו את המתנה שלכם</h2>
       <v-card
         v-for="product in products"
         :key="product.id"
