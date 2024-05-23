@@ -1,6 +1,7 @@
 import gridfs
 from pymongo import MongoClient
 prod_url="mongodb://admin:password@172.30.8.167:27017/admin"
+testing_url = "mongodb://127.0.0.1:27017"
 client = MongoClient(prod_url)
 db = client['DB']
 profiles = db['profiles']
@@ -24,10 +25,20 @@ def new_profile(profile):
     profiles.insert_one(profile_dict)
 
 
+
 def get_profile(profile_id):
     profile = profiles.find_one({"id": profile_id})
     del profile['_id']
     return profile
+
+
+def get_top10():
+    top10 = []
+    for profile in profiles.find().sort("trophies", -1).limit(10):
+        del profile['_id']
+        top10.append(profile)
+
+    return top10
 
 
 def upload_image(image, filename, profile_id, game_id):
