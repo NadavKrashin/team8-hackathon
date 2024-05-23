@@ -27,7 +27,6 @@ async def new_profile(profile: Profile):
 async def get_profile(profile_id: int):
     return db.get_profile(profile_id)
 
-
 @app.get("/")
 async def read_root():
     db.insert_json()
@@ -61,8 +60,14 @@ async def get_all_images():
     return pictures_dict
 
 @app.get("/leaderboard")
-async def get_leaderboard():
-    return db.get_top10()
+
+async def get_leaderboard(id: int):
+    leaderboard = db.profiles.find({}).sort("trophies", -1).limit(10)
+    for doc in leaderboard:
+        if doc["id"] == id:
+            return str(list(leaderboard))
+    return str(list(leaderboard).append(db.profiles.find_one({"id": id})))
+
 
 @app.get("/games/hayadata")
 async def get_hayadata():
