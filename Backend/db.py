@@ -2,7 +2,7 @@ import gridfs
 from pymongo import MongoClient
 prod_url="mongodb://admin:password@172.30.8.167:27017/admin"
 testing_url = "mongodb://127.0.0.1:27017"
-client = MongoClient(testing_url)
+client = MongoClient(prod_url)
 db = client['DB']
 profiles = db['profiles']
 fs = gridfs.GridFS(db)
@@ -36,7 +36,7 @@ def get_top10():
     for profile in profiles.find().sort("trophies", -1).limit(10):
         del profile['_id']
         top10.append(profile)
-        print(top10)
+
     return top10
 
 
