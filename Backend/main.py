@@ -63,8 +63,8 @@ async def get_all_images():
 
     return pictures_dict
 
-@app.get("/leaderboard")
 
+@app.get("/leaderboard")
 async def get_leaderboard(id: int):
     return db.get_top10()
 
