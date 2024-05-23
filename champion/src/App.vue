@@ -81,11 +81,11 @@ onMounted(async () => {
   const user = await getUser();
 
   updateUser(user);
-  unlockLevels(user.gameids)
+  unlockLevels(user.gameids);
 
   setTimeout(() => {
     showSplash.value = false; // Hide splash screen after loading
-  }, 0); // Change the time according to your application's loading time
+  }, 1500); // Change the time according to your application's loading time
 });
 // Simulate some loading time
 </script>
