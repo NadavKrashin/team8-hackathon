@@ -77,6 +77,7 @@ const route = useRoute();
 const isInStore = computed(() => route.fullPath === "/store");
 onMounted(async () => {
   const user = await getUser();
+
   updateUser(user);
 
   setTimeout(() => {

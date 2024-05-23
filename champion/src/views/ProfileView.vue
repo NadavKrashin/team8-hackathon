@@ -38,6 +38,7 @@ import EditProfile from "./EditProfile.vue";
 import { useUsersStore } from "../store/users";
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
+import { replaceUser } from "../api/api";
 
 const userStore = useUsersStore();
 
@@ -48,8 +49,9 @@ const isEditing = ref(false);
 const editProfile = () => {
   isEditing.value = true;
 };
-const saveProfile = (newProfile) => {
+const saveProfile = async (newProfile) => {
   updateUser(newProfile);
+  await replaceUser(newProfile);
   isEditing.value = false;
 };
 </script>

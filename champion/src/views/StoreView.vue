@@ -44,6 +44,7 @@ import "sweetalert2/dist/sweetalert2.min.css";
 import { useUsersStore } from "../store/users";
 import { nextTick } from "vue";
 import { storeToRefs } from "pinia";
+import { replaceUser } from "../api/api";
 export default {
   setup() {
     const usersStore = useUsersStore();
@@ -111,10 +112,12 @@ export default {
 
         product.used = true;
 
-        this.updateUser({
+        const newUser = {
           ...this.currentUser,
           coins: this.currentUser.coins - product.price,
-        });
+        };
+        this.updateUser(newUser);
+        await replaceUser(newUser);
       }
     },
   },

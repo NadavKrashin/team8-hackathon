@@ -17,6 +17,14 @@ export const getUser = async () => {
   }
 };
 
+export const getLeaderboard = async () => {
+  try {
+    return await fetchData("/leaderboard");
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
 export const sendImage = async (imageFile, profileId, gameId) => {
   try {
     const data = await uploadImage(
@@ -25,6 +33,15 @@ export const sendImage = async (imageFile, profileId, gameId) => {
       profileId,
       gameId
     );
+    console.log("Upload Success:", data);
+  } catch (error) {
+    console.error("Upload Error:", error);
+  }
+};
+
+export const replaceUser = async (newUser) => {
+  try {
+    const data = await axiosInstance.post("/profiles/replace_profile", newUser);
     console.log("Upload Success:", data);
   } catch (error) {
     console.error("Upload Error:", error);

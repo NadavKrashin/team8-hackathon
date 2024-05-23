@@ -57,6 +57,7 @@ import { ref } from "vue";
 import { useUsersStore } from "../../../store/users";
 import { useTasksStore } from "../../../store/tasks";
 import { useRoute } from "vue-router";
+import { replaceUser } from "../../../api/api";
 export default {
   setup() {
     const route = useRoute();
@@ -155,13 +156,16 @@ export default {
       this.loadQuestion();
       this.score = 0;
     },
-    handleWin() {
-      this.updateUser({
+    async handleWin() {
+      const newUser = {
         ...this.currentUser,
         coins: this.currentUser.coins + this.coinsToAdd,
         trophies: this.currentUser.trophies + this.trophiesToAdd,
         gameids: [...this.currentUser.gameids, +this.taskId],
-      });
+      };
+      this.updateUser(newUser);
+
+      await replaceUser(newUser);
       this.$router.push("/");
     },
     loadQuestion() {
@@ -173,7 +177,6 @@ export default {
         ];
         this.feedback = "";
         this.trophyText = "בהצלחה!";
-
       } else {
         this.currentQuestion = null;
       }
@@ -190,7 +193,7 @@ export default {
             this.trophyText = "תותחים!";
           }
         } else {
-          this.trophyText = "באסה"
+          this.trophyText = "באסה";
 
           this.feedback = `לא נכון. התשובה הנכונה היא ${this.currentQuestion.correct_answer}`;
         }
