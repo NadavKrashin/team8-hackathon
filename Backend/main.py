@@ -25,7 +25,11 @@ async def new_profile(profile: Profile):
 
 @app.get("/profiles/{profile_id}")
 async def get_profile(profile_id: int):
-    return db.get_profile(profile_id)
+    return str(db.profiles.find_one({"id": profile_id}))
+
+@app.post("/profiles/replace_profile")
+async def replace_profile(profile: Profile):
+    db.profiles.replace_one({"id": profile.id}, dict(profile))
 
 @app.get("/")
 async def read_root():
