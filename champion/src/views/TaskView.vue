@@ -8,7 +8,7 @@
             width="200"
             ></v-img>
             <v-img
-              src='../../public/talking.gif'
+              src='../../public/talking.png'
               aspect-ratio="1.78"
               class="gif-image"
             ></v-img>
