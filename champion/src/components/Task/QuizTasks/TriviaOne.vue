@@ -171,7 +171,7 @@ export default {
       this.updateUser(newUser);
 
       await replaceUser(newUser);
-      this.navigate("/");
+      location.assign("/");
     },
     loadQuestion() {
       if (this.questionIndex < this.questions.length) {
