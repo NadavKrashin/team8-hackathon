@@ -26,7 +26,7 @@ jobs:
         OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
         OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
       run: |
-        oc login $OPENSHIFT_SERVER --token=$OPENSHIFT_TOKEN
+        oc login $OPENSHIFT_SERVER --token=$OPENSHIFT_TOKEN --insecure-skip-tls-verify
 
     - name: Trigger Build 1
       env:
@@ -55,7 +55,7 @@ jobs:
         OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
         OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
       run: |
-        oc login $OPENSHIFT_SERVER --token=$OPENSHIFT_TOKEN
+        oc login $OPENSHIFT_SERVER --token=$OPENSHIFT_TOKEN --insecure-skip-tls-verify
 
     - name: Trigger Build 2
       env:
