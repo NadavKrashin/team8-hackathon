@@ -28,10 +28,16 @@ jobs:
       run: |
         oc login $OPENSHIFT_SERVER --token=$OPENSHIFT_TOKEN --insecure-skip-tls-verify
 
-    - name: Trigger OpenShift Build
+    - name: Trigger OpenShift Backend Build
       env:
         OPENSHIFT_NAMESPACE: ${{ secrets.OPENSHIFT_NAMESPACE }}
       run: |
         oc project $OPENSHIFT_NAMESPACE
         oc start-build backend --wait
+
+    - name: Trigger OpenShift Frontend Build
+      env:
+        OPENSHIFT_NAMESPACE: ${{ secrets.OPENSHIFT_NAMESPACE }}
+      run: |
+        oc project $OPENSHIFT_NAMESPACE
         oc start-build front --wait
