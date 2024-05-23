@@ -65,7 +65,7 @@ async def get_all_images():
 
 
 @app.get("/leaderboard")
-async def get_leaderboard(id: int):
+async def get_leaderboard():
     return db.get_top10()
 
 
